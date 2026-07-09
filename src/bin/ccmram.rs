@@ -16,7 +16,7 @@ fn main() -> ! {
     }
 
     let address = buffer as usize;
-    defmt::println!("FAST_BUFFER is at {=usize:#010x}", address);
+    defmt::info!("FAST_BUFFER is at {=usize:#010x}", address);
     defmt::assert!(address >= 0x1000_0000 && address < 0x1001_0000);
 
     bootloader::exit()
