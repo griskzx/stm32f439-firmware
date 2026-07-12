@@ -156,7 +156,7 @@ If you are using [rust-analyzer] with VS Code for IDE-like features you can add 
 {
     "rust-analyzer.linkedProjects": [
         "Cargo.toml",
-        "firmware/Cargo.toml",
+        "firmware/Cargo.toml"
     ]
 }
 ```

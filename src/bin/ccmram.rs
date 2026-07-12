@@ -8,7 +8,7 @@ static mut FAST_BUFFER: [u32; 1024] = [0; 1024];
 
 #[cortex_m_rt::entry]
 fn main() -> ! {
-    let buffer = core::ptr::addr_of_mut!(FAST_BUFFER);
+    let buffer =core::ptr::addr_of_mut!(FAST_BUFFER );
 
     unsafe {
         (*buffer)[0] = 0x1234_5678;
