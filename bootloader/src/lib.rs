@@ -1,6 +1,8 @@
 #![no_main]
 #![no_std]
 
+mod boot;
+
 use defmt_rtt as _; // global logger
 
 use stm32f4xx_hal as _; // memory layout and interrupt vectors
