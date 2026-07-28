@@ -14,5 +14,5 @@ pub unsafe fn jump_to_app(app_addr:u32)->!{
         (*SCB::PTR).vtor.write(app_addr);
         asm::bootload(app_addr as *const u32);
     }
-    loop {}
+    'label: loop {}
 }
