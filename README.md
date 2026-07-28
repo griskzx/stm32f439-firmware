@@ -32,6 +32,25 @@ cargo build -p app
 cargo run -p app
 ```
 
+App 使用 Cargo feature 选择 A/B 分区，不需要手动设置环境变量。默认构建 App A：
+
+```bash
+cargo app-a
+```
+
+构建 App B：
+
+```bash
+cargo app-b
+```
+
+也可以使用完整命令：
+
+```bash
+cargo build -p app --release
+cargo build -p app --release --no-default-features --features slot-b
+```
+
 也可以继续使用根配置中的缩写：
 
 ```bash
@@ -41,10 +60,25 @@ cargo rb app -p app
 
 ## Flash 分区
 
-`bootloader/memory.x` 与 `app/memory.x` 已经彼此独立。当前两者都沿用完整的
-STM32F439 Flash 地址范围，便于分别构建和下载。真正让 Bootloader 跳转到 App
-之前，需要根据 Bootloader 的预留大小修改两份 `memory.x` 中的 `FLASH` 区域，
-并在 Bootloader 中实现向量表重定位与跳转逻辑。
+STM32F439 的 2 MB Flash 分区如下：
+
+| 区域 | 起始地址 | 大小 | 扇区 |
+|---|---:|---:|---:|
+| Bootloader | `0x08000000` | 128 KB | 0..4 |
+| App A | `0x08020000` | 896 KB | 5..11 |
+| App B | `0x08100000` | 896 KB | 12..22 |
+| Metadata | `0x081E0000` | 128 KB | 23 |
+
+App 的链接脚本位于 `app/memory-a.x` 和 `app/memory-b.x`。`app/build.rs`
+会根据 Cargo feature 将选中的脚本复制为链接器使用的 `memory.x`：
+
+```text
+slot-a -> 0x08020000
+slot-b -> 0x08100000
+```
+
+Bootloader 仍需在运行时校验镜像、选择活动槽位、设置 VTOR，并跳转到对应的
+Reset Handler；链接脚本只负责生成正确的固件地址布局。
 
 原项目模板的详细说明保留在
 [`bootloader/README.md`](bootloader/README.md)。
