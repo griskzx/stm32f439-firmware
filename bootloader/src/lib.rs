@@ -1,7 +1,7 @@
 #![no_main]
 #![no_std]
 
-mod boot;
+pub mod boot;
 
 use defmt_rtt as _; // global logger
 
