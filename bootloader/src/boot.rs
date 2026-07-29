@@ -8,6 +8,8 @@ pub const APP_B:u32 = 0x08100000;
 pub struct BootHeader{
     version:[u8;4],
     active_slot:u32,
+    crc:u32,
+
 }
 
 

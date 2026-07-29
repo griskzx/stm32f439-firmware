@@ -49,6 +49,11 @@ name = "simple_jump"
 path="src/bin/simple_jump.rs"
 test = false
 
+[[bin]]
+name = "flash"
+path = "src/bin/flash.rs"
+test = false
+
 [lib]
 harness = false
 
