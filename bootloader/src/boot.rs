@@ -53,3 +53,7 @@ pub unsafe fn clear_device() {
         (*SCB::PTR).icsr.write((1 << 27) | (1 << 25));
     }
 }
+
+/// 16kb 缓冲区
+#[unsafe(link_section = ".ccmram.buffers")]
+pub static FIRMWARE_BUF: [u8; 16 * 1024] = [0; 16 * 1024];

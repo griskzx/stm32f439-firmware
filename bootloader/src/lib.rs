@@ -2,6 +2,7 @@
 #![no_std]
 
 pub mod boot;
+pub mod flash;
 
 use defmt_rtt as _; // global logger
 
