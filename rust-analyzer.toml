@@ -1,7 +1,9 @@
 [cargo]
 target = "thumbv7em-none-eabihf"
 allTargets = false
-unsetTest = ["core", "boot", "app"]
+
+[cfg]
+setTest = false
 
 [check]
 allTargets = false

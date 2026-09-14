@@ -8,6 +8,12 @@ rustflags = [
   "-C", "link-arg=--nmagic",
 ]
 
+[env]
+# Compile-time defmt filter. Applies to app, boot, and all bins.
+# debug includes debug/info/warn/error, not trace.
+# Override per-invocation: DEFMT_LOG=trace cargo run -p app --bin app
+DEFMT_LOG = "debug"
+
 [build]
 target = "thumbv7em-none-eabihf"
 

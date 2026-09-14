@@ -7,8 +7,10 @@
     "initializationOptions": {
       "cargo": {
         "target": "thumbv7em-none-eabihf",
-        "allTargets": false,
-        "unsetTest": ["core", "boot", "app"]
+        "allTargets": false
+      },
+      "cfg": {
+        "setTest": false
       },
       "check": {
         "allTargets": false,
@@ -19,8 +21,10 @@
     "settings": {
       "cargo": {
         "target": "thumbv7em-none-eabihf",
-        "allTargets": false,
-        "unsetTest": ["core", "boot", "app"]
+        "allTargets": false
+      },
+      "cfg": {
+        "setTest": false
       },
       "check": {
         "allTargets": false,
