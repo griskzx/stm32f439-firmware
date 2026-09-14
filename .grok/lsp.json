@@ -1,0 +1,32 @@
+{
+  "rust-analyzer": {
+    "command": "rust-analyzer",
+    "extensionToLanguage": {
+      ".rs": "rust"
+    },
+    "initializationOptions": {
+      "cargo": {
+        "target": "thumbv7em-none-eabihf",
+        "allTargets": false,
+        "unsetTest": ["core", "boot", "app"]
+      },
+      "check": {
+        "allTargets": false,
+        "extraArgs": ["--bins"],
+        "workspace": false
+      }
+    },
+    "settings": {
+      "cargo": {
+        "target": "thumbv7em-none-eabihf",
+        "allTargets": false,
+        "unsetTest": ["core", "boot", "app"]
+      },
+      "check": {
+        "allTargets": false,
+        "extraArgs": ["--bins"],
+        "workspace": false
+      }
+    }
+  }
+}
