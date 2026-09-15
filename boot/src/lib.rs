@@ -24,7 +24,7 @@ pub fn exit() -> ! {
     semihosting::process::exit(0);
 }
 
-/// Hardfault handler.
+/// Hard fault handler.
 ///
 /// Terminates the application and makes a semihosting-capable debug tool exit
 /// with an error. This seems better than the default, which is to spin in a

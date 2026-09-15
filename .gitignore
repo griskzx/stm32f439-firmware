@@ -1,3 +1,6 @@
 /target
 **/*.rs.bk
 .gdb_history
+/.idea/
+/.vscode/
+/.zed/
