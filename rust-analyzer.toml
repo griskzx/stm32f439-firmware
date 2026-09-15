@@ -1,11 +1,12 @@
 [cargo]
 target = "thumbv7em-none-eabihf"
+# Bin unit tests still use libtest, which is missing on this target.
 allTargets = false
 
 [cfg]
-setTest = false
+# Keep #[cfg(test)] / defmt-test modules active in the IDE.
+setTest = true
 
 [check]
 allTargets = false
-extraArgs = ["--bins"]
 workspace = false
