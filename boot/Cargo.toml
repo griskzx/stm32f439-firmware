@@ -16,31 +16,49 @@ version = "0.1.0"
 name = "bitfield"
 path = "src/bin/bitfield.rs"
 test = false
+harness = false
+
+[[bin]]
+name = "dump"
+path = "src/bin/dump.rs"
+test = false
+harness = false
 
 [[bin]]
 name = "format"
 path = "src/bin/format.rs"
 test = false
+harness = false
 
 [[bin]]
 name = "hello"
 path = "src/bin/hello.rs"
 test = false
+harness = false
 
 [[bin]]
 name = "levels"
 path = "src/bin/levels.rs"
 test = false
+harness = false
 
 [[bin]]
 name = "overflow"
 path = "src/bin/overflow.rs"
 test = false
+harness = false
 
 [[bin]]
 name = "panic"
 path = "src/bin/panic.rs"
 test = false
+harness = false
+
+[[bin]]
+name = "usb_demo"
+path = "src/bin/usb_demo.rs"
+test = false
+harness = false
 
 [lib]
 harness = false
@@ -58,8 +76,11 @@ defmt = "1.0"
 defmt-rtt = "1.0"
 panic-probe = { version = "1.0", features = ["print-defmt"] }
 semihosting = "0.1.20"
+static_cell = "2.1.1"
 # TODO(4) enter your HAL here
-stm32f4xx-hal = { version = "0.23.0", features = ["stm32f439"] }
+stm32f4xx-hal = { version = "0.23.0", features = ["stm32f439", "usb_fs"] }
+usb-device = "0.3.2"
+usbd-serial = "0.2.2"
 
 [dev-dependencies]
 defmt-test = "0.3"

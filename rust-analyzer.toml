@@ -4,8 +4,8 @@ target = "thumbv7em-none-eabihf"
 allTargets = false
 
 [cfg]
-# Keep #[cfg(test)] / defmt-test modules active in the IDE.
-setTest = true
+# no_std targets do not provide Rust's standard libtest crate.
+setTest = false
 
 [check]
 allTargets = false

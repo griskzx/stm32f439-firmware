@@ -8,6 +8,6 @@ fn main() -> ! {
     let dp = Peripherals::take().unwrap();
 
     // 配置时钟
-    let rcc = dp.RCC.freeze(Config::hse(25.MHz()));
+    let _rcc = dp.RCC.freeze(Config::hse(25.MHz()));
     boot::exit()
 }
