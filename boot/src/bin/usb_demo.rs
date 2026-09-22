@@ -2,6 +2,7 @@
 #![no_std]
 
 use boot as _;
+use heapless::Deque;
 use static_cell::ConstStaticCell;
 use stm32f4xx_hal::{
     otg_fs::{USB, UsbBus},
@@ -46,27 +47,31 @@ fn main() -> ! {
         .unwrap()
         .build();
 
-    let mut buffer = [0u8; 64];
-    let mut received = 0;
-    let mut sent = 0;
+    let mut tx_queue = Deque::<u8, 128>::new();
+    let mut rx_buf = [0u8; 128];
 
     defmt::info!("USB echo demo started");
 
     loop {
         let usb_event = usb_device.poll(&mut [&mut serial]);
 
-        // 先把上一包数据完整回传，再接收下一包，避免丢数据。
-        if sent < received {
-            if let Ok(count) = serial.write(&buffer[sent..received]) {
-                sent += count;
+        if !tx_queue.is_empty() {
+            defmt::debug!("正在发送数据");
+            let (slice1, _) = tx_queue.as_slices();
+            if let Ok(count) = serial.write(slice1) {
+                for _ in 0..count {
+                    tx_queue.pop_front();
+                }
             }
-            continue;
         }
 
         if usb_event {
-            if let Ok(count) = serial.read(&mut buffer) {
-                received = count;
-                sent = 0;
+            if let Ok(count) = serial.read(&mut rx_buf) {
+                for &byte in &rx_buf[..count] {
+                    defmt::debug!("接收到字节: {:#04x}", byte);
+                    defmt::debug!("接收到字节: {}", byte as char);
+                    let _ = tx_queue.push_back(byte);
+                }
             }
         }
     }

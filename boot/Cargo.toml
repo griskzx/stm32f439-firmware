@@ -74,6 +74,7 @@ cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7"
 defmt = "1.0"
 defmt-rtt = "1.0"
+heapless = "0.9.3"
 panic-probe = { version = "1.0", features = ["print-defmt"] }
 semihosting = "0.1.20"
 static_cell = "2.1.1"

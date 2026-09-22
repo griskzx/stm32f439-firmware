@@ -108,6 +108,7 @@ dependencies = [
  "defmt 1.1.1",
  "defmt-rtt",
  "defmt-test",
+ "heapless 0.9.3",
  "panic-probe",
  "semihosting",
  "static_cell",
