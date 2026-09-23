@@ -60,6 +60,12 @@ path = "src/bin/usb_demo.rs"
 test = false
 harness = false
 
+[[bin]]
+name = "flash_demo"
+path = "src/bin/flash_demo.rs"
+test = false
+harness = false
+
 [lib]
 harness = false
 doctest = false

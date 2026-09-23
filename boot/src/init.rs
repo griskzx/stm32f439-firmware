@@ -8,6 +8,7 @@ pub fn set_clocks(rcc: pac::RCC) -> Rcc {
         .hclk(16.MHz())
         .sysclk(168.MHz())
         .pclk1(42.MHz())
-        .pclk2(84.MHz());
+        .pclk2(84.MHz())
+        .require_pll48clk();
     rcc.freeze(config)
 }
