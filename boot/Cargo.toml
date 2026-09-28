@@ -6,11 +6,13 @@ edition = "2024"
 version = "0.1.0"
 
 
-# To run all the tests via `cargo test` the tests need to be explicitly disabled for the binary targets
-# If you use a standard main.rs file the following is sufficient:
-# [[bin]]
-# name = "boot"
-# test = false
+# Firmware binaries must not use the standard libtest harness on this target.
+[[bin]]
+name = "boot"
+path = "src/main.rs"
+test = false
+bench = false
+harness = false
 
 [[bin]]
 name = "bitfield"
@@ -76,6 +78,7 @@ name = "integration"
 harness = false
 
 [dependencies]
+fsapos = { path = "../fsapos" }
 cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7"
 defmt = "1.0"

@@ -1,0 +1,14 @@
+[package]
+name = "fsapos"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+test = false
+doctest = false
+bench = false
+
+[dependencies]
+embedded-storage = "0.3.2"
+log = "0.4.34"
+zerocopy = { version = "0.8.59", features = ["derive"] }

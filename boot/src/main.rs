@@ -1,3 +1,9 @@
+//! 共2m flash，
+//! 第一个1m 前128kb boot
+//! 后896kb为app a  Sector 5    0x0802_0000
+//! 第二个1m 前128kb data Sector 12  0x0810_0000
+//! 后896kb为app b  Sector 17  0x0812_0000
+
 #![no_std]
 #![no_main]
 
@@ -5,6 +11,7 @@ use boot as _;
 use boot::init::{init_usb, set_clocks};
 use boot::msg::{BOOT_CONTEXT_MAGIC, Context, Partition};
 use defmt::{info, warn};
+use fsapos as _;
 use heapless::{Deque, Vec};
 use stm32f4xx_hal::flash::FlashExt;
 use stm32f4xx_hal::prelude::*;
