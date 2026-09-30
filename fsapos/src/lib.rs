@@ -3,7 +3,6 @@
 pub mod crc;
 pub mod rand;
 pub mod region;
-pub mod storage_header;
 pub mod stroage;
 
 use embedded_storage::nor_flash::NorFlash;
