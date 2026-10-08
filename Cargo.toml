@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["boot", "app", "fsapos"]
+members = ["boot", "app", "fsapos", "xtask"]
 
 [profile.dev]
 opt-level = "s"

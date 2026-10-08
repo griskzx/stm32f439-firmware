@@ -11,7 +11,6 @@ use boot as _;
 use boot::init::{init_usb, set_clocks};
 use boot::msg::{BOOT_CONTEXT_MAGIC, Context, Partition};
 use defmt::{info, warn};
-use fsapos as _;
 use heapless::{Deque, Vec};
 use stm32f4xx_hal::flash::FlashExt;
 use stm32f4xx_hal::prelude::*;

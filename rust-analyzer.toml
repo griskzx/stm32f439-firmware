@@ -1,5 +1,5 @@
 [cargo]
-target = "thumbv7em-none-eabihf"
+# target = "thumbv7em-none-eabihf"
 # Bin unit tests still use libtest, which is missing on this target.
 allTargets = false
 
