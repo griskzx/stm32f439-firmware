@@ -1,7 +1,4 @@
-/target
-**/*.rs.bk
-.gdb_history
-/.idea/
-/.vscode/
-/.zed/
-/.codex/
+/target/
+/app/target/
+/boot/target/
+/xtask/target/

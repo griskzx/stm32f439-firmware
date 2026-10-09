@@ -1,0 +1,26 @@
+{
+  "lsp": {
+    "rust-analyzer": {
+      "binary": {
+        "ignore_system_version": true
+      },
+      "initialization_options": {
+        "cargo": {
+          "target": "thumbv7em-none-eabihf",
+          "targetDir": "target/rust-analyzer",
+          "buildScripts": {
+            "enable": true,
+            "overrideCommand": ["python3", ".zed/check.py"]
+          }
+        },
+        "procMacro": {
+          "enable": true
+        },
+        "checkOnSave": true,
+        "check": {
+          "overrideCommand": ["python3", ".zed/check.py"]
+        }
+      }
+    }
+  }
+}
