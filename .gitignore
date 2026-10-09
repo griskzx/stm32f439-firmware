@@ -2,3 +2,4 @@
 /app/target/
 /boot/target/
 /xtask/target/
+.ropeproject/
