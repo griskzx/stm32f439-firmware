@@ -1,8 +1,8 @@
 [package]
+edition = "2024"
 name = "app"
-version.workspace = true
-edition.workspace = true
-publish.workspace = true
+version = "0.1.0"
+authors = ["xin"]
 
 [[bin]]
 name = "app"
@@ -10,11 +10,28 @@ test = false
 bench = false
 
 [dependencies]
-embassy-stm32 = { version = "0.6.0", features = ["defmt", "stm32f439zi", "time-driver-tim4"] }
-embassy-executor = { version = "0.10.0", features = ["platform-cortex-m", "executor-thread", "defmt"] }
-embassy-time = { version = "0.5.1", features = ["defmt", "defmt-timestamp-uptime"] }
 cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7"
 defmt = "1.0"
 defmt-rtt = "1.0"
 panic-probe = { version = "1.0", features = ["print-defmt"] }
+
+embedded-hal = "1.0.0"
+embedded-hal-async = "1.0.0"
+embedded-io = "0.7"
+embedded-io-async = "0.7"
+embedded-storage = "0.3.1"
+
+embassy-executor = { version = "0.10", features = ["platform-cortex-m", "executor-thread", "defmt", "executor-interrupt"] }
+embassy-sync = { version = "0.8" }
+embassy-time = { version = "0.5", features = ["defmt", "defmt-timestamp-uptime"] }
+embassy-stm32 = { version = "0.6", features = ["defmt", "stm32f439zi", "unstable-pac", "memory-x", "time-driver-any" ]  }
+[profile.release]
+debug = 2
+lto = true
+opt-level = 'z'
+
+[profile.dev]
+debug = 2
+lto = true
+opt-level = "z"

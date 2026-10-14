@@ -1,17 +1,20 @@
 [package]
+authors = ["xin"]
 name = "boot"
-version.workspace = true
-edition.workspace = true
-publish.workspace = true
+edition = "2024"
+version = "0.1.0"
 
-[lib]
-harness = false
 
+# To run all the tests via `cargo test` the tests need to be explicitly disabled for the binary targets
+# If you use a standard main.rs file the following is sufficient:
 [[bin]]
 name = "boot"
 test = false
 bench = false
 
+
+[lib]
+harness = false
 
 # needed for each integration test
 [[test]]
@@ -19,13 +22,35 @@ name = "integration"
 harness = false
 
 [dependencies]
-stm32f4xx-hal = { version = "0.23.0", features = ["stm32f439"] }
 cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7"
 defmt = "1.0"
 defmt-rtt = "1.0"
 panic-probe = { version = "1.0", features = ["print-defmt"] }
+
 semihosting = "0.1.20"
+stm32f4xx-hal = { version = "0.23.0", features = ["stm32f439"] }
 
 [dev-dependencies]
 defmt-test = "0.3"
+
+# cargo build/run
+[profile.dev]
+# default is opt-level = '0', but that makes very
+# verbose machine code
+opt-level = 's'
+# trade compile speed for slightly better optimisations
+codegen-units = 1
+
+# cargo build/run --release
+[profile.release]
+# default is opt-level = '3', but that makes quite
+# verbose machine code
+opt-level = 's'
+# trade compile speed for slightly better optimisations
+codegen-units = 1
+# Use Link Time Optimisations to further inline things across
+# crates
+lto = 'fat'
+# Leave the debug symbols in (default is no debug info)
+debug = 2
