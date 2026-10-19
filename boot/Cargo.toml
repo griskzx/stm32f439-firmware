@@ -29,7 +29,10 @@ defmt-rtt = "1.0"
 panic-probe = { version = "1.0", features = ["print-defmt"] }
 
 semihosting = "0.1.20"
-stm32f4xx-hal = { version = "0.23.0", features = ["stm32f439"] }
+stm32f4xx-hal = { version = "0.23.0", features = ["stm32f439", "usb_fs"] }
+static_cell = "2.1"
+usb-device = "0.3"
+usbd-serial = "0.2"
 
 [dev-dependencies]
 defmt-test = "0.3"
