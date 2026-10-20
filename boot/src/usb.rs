@@ -2,6 +2,7 @@
 //!
 //! main.rs 配置好时钟后调用 run()，程序随后一直在本文件的 loop 中运行。
 //! 下方“接收”和“发送”两处就是以后编写通信逻辑的位置。
+use heapless::Deque;
 use static_cell::ConstStaticCell;
 use stm32f4xx_hal::{
     otg_fs::{USB, UsbBus},
@@ -81,11 +82,12 @@ pub fn run(
     let mut received = 0; // buf 中实际有效的数据长度。
     let mut sent = 0; // 其中已经交给 USB 发送缓冲区的字节数。
 
+    let mut queue: Deque<u8, 64> = heapless::Deque::new();
+
     loop {
         // 1. 每一轮都要处理 USB 事件，例如枚举、控制请求和传输完成。
         //    即使暂时没有数据，或者发送忙，也必须继续 poll。
         usb.poll(&mut [&mut serial]);
-
         // 电脑还没完成枚举时不收发，同时清除上次连接剩余的应用层数据。
         if usb.state() != UsbDeviceState::Configured {
             received = 0;
@@ -105,6 +107,12 @@ pub fn run(
                     // 本次收到的是 &buf[..received]，其余部分不是本次有效数据。
                     // 当前示例不做解析，下面会把这批字节原样发回电脑。
                     // 注意：一次 read 不等于一条完整命令，命令可能分多次收到。
+
+                    if buf[received] == b'\n' {
+                        if buf[received - 1] == b'\r' {
+                            queue.extend(&buf[..received - 2]);
+                        }
+                    }
                 }
                 Err(UsbError::WouldBlock) => {
                     // 暂时没有数据，这是正常情况；下一轮继续 poll 和 read。
@@ -118,7 +126,10 @@ pub fn run(
         // 3. 发送：板子 -> 电脑。
         //    【你自己的回复在这里发送】当前示例发送收到的原始数据。
         if sent < received {
-            match serial.write(&buf[sent..received]) {
+            match serial.write({
+                let (f, _) = queue.as_slices();
+                f
+            }) {
                 Ok(count) => {
                     // write 可能只接受一部分字节，必须记录进度，下次接着发送。
                     // 返回成功只代表已交给驱动，不代表电脑程序已经读到了。

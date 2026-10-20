@@ -1,3 +1,5 @@
+# [workspace]
+
 [package]
 authors = ["xin"]
 name = "boot"
