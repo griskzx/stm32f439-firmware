@@ -20,3 +20,6 @@ target = "thumbv7em-none-eabihf" # Cortex-M4F and Cortex-M7F (with FPU)
 rb = "run --bin"
 # `cargo rrb foo` will expand to `cargo run --release --bin foo`
 rrb = "run --release --bin"
+
+[env]
+DEFMT_LOG = "info"
