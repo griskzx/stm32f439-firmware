@@ -4,7 +4,7 @@
 use boot as _; // 引入本项目库中的 RTT 日志、panic 和异常处理。
 use stm32f4xx_hal::{pac, prelude::*, rcc::Config};
 
-mod usb; // 加载同目录的 usb.rs。
+use boot::{parse,usb};
 
 // NUCLEO-F439ZI（MB1137）的 ST-LINK 提供 8 MHz MCO 时钟给 PH0/OSC_IN。
 // 这是外部输入的时钟信号，因此使用 HSE bypass（旁路模式）。
@@ -45,12 +45,39 @@ fn main() -> ! {
     );
 
     // 把 USB 和对应 GPIO 的所有权交给 usb.rs。
-    // run 不会返回；收发示例写在它内部的 loop 中，不需要在 main 再写一份。
-    usb::run(
+    // init 会开启 OTG_FS 中断后返回；之后 USB 的 poll 和收发都在中断里完成，
+    // 主循环只通过 rx / tx 队列读写数据，耗时操作不会影响 USB 连接。
+    let mut serial = usb::init(
         dp.GPIOA,
         dp.OTG_FS_GLOBAL,
         dp.OTG_FS_DEVICE,
         dp.OTG_FS_PWRCLK,
         &mut rcc,
-    )
+    );
+
+    let cli = parse::Cli;
+    // USB CDC 是字节流，一次读到的数据不一定是一条完整命令，所以按行累计。
+    let mut line: heapless::Vec<u8, 64> = heapless::Vec::new();
+
+    loop {
+        while let Some(byte) = serial.read_byte() {
+            // 回显收到的字节；队列满时丢弃回显，不影响命令解析。
+            serial.write(&[byte]);
+
+            match byte {
+                b'\n' => {
+                    // 支持 \r\n 和 \n 两种行结束符。
+                    if line.last() == Some(&b'\r') {
+                        line.pop();
+                    }
+                    cli.cmd_parse(&line);
+                    line.clear();
+                }
+                // 行太长时 push 失败，直接丢弃这一字节。
+                _ => {
+                    let _ = line.push(byte);
+                }
+            }
+        }
+    }
 }

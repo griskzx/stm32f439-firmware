@@ -36,6 +36,7 @@ static_cell = "2.1"
 usb-device = "0.3"
 usbd-serial = "0.2"
 heapless = "0.9.3"
+zerocopy = { version = "0.8.63", features = ["derive"] }
 
 [dev-dependencies]
 defmt-test = "0.5.1"
