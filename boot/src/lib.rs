@@ -17,11 +17,11 @@ pub mod app{
 	pub const APP_A_START:usize = 0x0802_0000+1024;
 	pub const APP_B_MSG:usize = 0x0812_0000;
 	pub const APP_B_START:usize = 0x0812_0000+1024;
-	pub const APP_MSG_SIZE:usize = size_of::<App>();
+	pub const APP_MSG_SIZE:usize = size_of::<AppMsg>();
 
 	#[derive(Debug,Copy, Clone,FromBytes,IntoBytes,Immutable,KnownLayout)]
 	#[repr(C)]
-	pub struct App{
+	pub struct AppMsg {
 		pub version:[u8;4],
 		pub size:u32,
 		pub sha:[u8;32],
